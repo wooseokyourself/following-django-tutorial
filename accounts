@@ -1,0 +1,4 @@
+OS user for postgresql: postgres (sudo -i -u postgres to login)
+Superuser of postgresql: postgresql (passwd: postgresql)
+Postgresql user for mysite db: postgres-mysite (passwd: postgres-mysite)
+Admin of django: wooseokyourself (passwd: fkrhrh01)
