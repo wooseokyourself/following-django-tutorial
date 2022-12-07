@@ -2,16 +2,22 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
-from django.db.models import F
+from django.db.models import F, Count
 from django.utils import timezone
 from .models import Question, Choice
 
 def get_published_question_queryset():
+    """
     question_queryset = Question.objects.filter(pub_date__lte=timezone.now())
     for q in question_queryset.iterator():
         if Choice.objects.filter(question=q.pk).count() == 0:
             question_queryset = question_queryset.exclude(pk=q.pk)
     return question_queryset
+    """
+    return Question.objects.filter(
+            pub_date__lte=timezone.now()).annotate(
+                    num_choices=Count('choice')).filter(
+                            num_choices__gt=0)
 
 class IndexView(generic.ListView): 
     template_name = 'generic_polls/index.html'
